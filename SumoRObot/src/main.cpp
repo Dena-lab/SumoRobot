@@ -4,19 +4,49 @@
 #include <nRF24L01.h>
 #include <RF24.h>
 
+// define the pins
+# define LeftSerrvoPIN 9
+# define RightSerrvoPIN 10
+# define LMotorA 3
+# define LMotorB 4
+# define RMotorA 5
+# define RMotorB 6
 
-RF24 radio(7, 8); // CE, CSN
+// define the servos
+Servo LeftServo;
+Servo RightServo;
 
-const byte address[6] = "00001";
+RF24 radio(7, 8);   // CE, CSN
+
+const byte address[6] = "01011";      // 11
 
 void setup() {
-  Serial.begin(9600);
+
+  // intialize the NRF24L01 module as reciever
+  Serial.begin(19200);
   radio.begin();
   radio.openReadingPipe(0, address);
   radio.setPALevel(RF24_PA_MIN);
   radio.startListening();
+
+  // intialize the motors
+  pinMode(LMotorA, OUTPUT);
+  pinMode(LMotorB, OUTPUT);
+  pinMode(RMotorA, OUTPUT);
+  pinMode(RMotorB, OUTPUT);
+  
+  // intialize the servos
+  LeftServo.attach(LeftSerrvoPIN);
+  RightServo.attach(RightSerrvoPIN);
+
+  //set the servos to the default position
+  LeftServo.write(90);
+  RightServo.write(90);
+
 }
 
 void loop() {
-  // put your main code here, to run repeatedly:
+  
+  
+  
 }
